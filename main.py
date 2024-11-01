@@ -272,8 +272,10 @@ def process_with_temp_files(input_filename, output_filename, column_info,
         Path for final output file
     column_info : dict
         Dictionary specifying the column indices and units for required fields
-        Example:
-        {
+
+        It is advisable to use this template:
+        Without velocity columns:
+        column_info = {
             'x': {'index': 0, 'unit': 'kpc'},  # Unit will be converted to kpc if different
             'y': {'index': 1, 'unit': 'pc'},   # Unit will be converted to kpc if different
             'z': {'index': 2, 'unit': 'Mpc'},  # Unit will be converted to kpc if different
@@ -284,6 +286,24 @@ def process_with_temp_files(input_filename, output_filename, column_info,
             'density': {'index': 7},
             'mass': {'index': 8, 'unit': 'Msun'}
         }
+
+        With velocity columns:
+        column_info = {
+            'x': {'index': 0, 'unit': 'kpc'},
+            'y': {'index': 1, 'unit': 'kpc'},
+            'z': {'index': 2, 'unit': 'kpc'},
+            'h': {'index': 3, 'unit': 'kpc'},
+            'v_x': {'index': 4, 'unit': 'km/s'},
+            'v_y': {'index': 5, 'unit': 'km/s'},
+            'v_z': {'index': 6, 'unit': 'km/s'},
+            'v_disp': {'index': 7, 'unit': 'km/s'},
+            'age': {'index': 8, 'unit': 'Gyr'},
+            'metallicity': {'index': 9},
+            'sfe': {'index': 10},
+            'density': {'index': 11},
+            'mass': {'index': 12, 'unit': 'Msun'}
+        }    
+
     sfe_override : float, optional
         Override star formation efficiency value to use another value
     density_override : float, optional
@@ -323,7 +343,8 @@ def process_with_temp_files(input_filename, output_filename, column_info,
         cleanup_temp_files(temp_files)
 
 if __name__ == "__main__":
-    #1 Example column information including velocity components
+    # Examples (read the comments please)
+    #1 column information including velocity components, use this template
     column_info = {
         'x': {'index': 0, 'unit': 'kpc'},
         'y': {'index': 1, 'unit': 'kpc'},
@@ -349,7 +370,7 @@ if __name__ == "__main__":
         density_override=320.,
     )
 
-    #2 Example column information without velocity components
+    #2 column information without velocity components, use this template
     column_info = {
         'x': {'index': 0, 'unit': 'kpc'},
         'y': {'index': 1, 'unit': 'kpc'},
