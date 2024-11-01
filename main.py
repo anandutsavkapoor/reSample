@@ -323,7 +323,7 @@ def process_with_temp_files(input_filename, output_filename, column_info,
         cleanup_temp_files(temp_files)
 
 if __name__ == "__main__":
-    # Example column information including velocity components
+    #1 Example column information including velocity components
     column_info = {
         'x': {'index': 0, 'unit': 'kpc'},
         'y': {'index': 1, 'unit': 'kpc'},
@@ -342,8 +342,30 @@ if __name__ == "__main__":
     
     # Process the file with automatic temporary file handling
     process_with_temp_files(
-        input_filename="test.txt",
-        output_filename="test_out.txt",
+        input_filename="test_velo.dat",
+        output_filename="test_velo_out.dat",
+        column_info=column_info,
+        sfe_override=0.025,
+        density_override=320.,
+    )
+
+    #2 Example column information without velocity components
+    column_info = {
+        'x': {'index': 0, 'unit': 'kpc'},
+        'y': {'index': 1, 'unit': 'kpc'},
+        'z': {'index': 2, 'unit': 'kpc'},
+        'h': {'index': 3, 'unit': 'kpc'},
+        'age': {'index': 4, 'unit': 'Myr'}, # in this file the time is in Myr
+        'metallicity': {'index': 5},
+        'sfe': {'index': 6},
+        'density': {'index': 7},
+        'mass': {'index': 8, 'unit': 'Msun'}
+    }
+    
+    # Process the file with automatic temporary file handling
+    process_with_temp_files(
+        input_filename="test_no_velo.dat",
+        output_filename="test_no_velo_out.dat",
         column_info=column_info,
         sfe_override=0.025,
         density_override=320.,
