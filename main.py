@@ -33,7 +33,7 @@ def create_header_info(column_info):
     
     return headers
 
-def preprocess_input_file(input_filename, output_filename, column_info, length_unit='kpc', age_unit='Myr'):
+def preprocess_input_file(input_filename, output_filename, column_info):
     """
     Create an intermediate file with the required column structure for the package.
     
@@ -52,10 +52,6 @@ def preprocess_input_file(input_filename, output_filename, column_info, length_u
             'z': {'index': 2, 'unit': 'kpc'},
             ...
         }
-    length_unit : str
-        Target unit for length quantities (default: 'kpc')
-    age_unit : str
-        Target unit for time quantities (default: 'Myr')
     """
     # Verify all required columns are present
     required_columns = {'x', 'y', 'z', 'h', 'age', 'metallicity', 'sfe', 'density', 'mass'}
@@ -98,14 +94,14 @@ def preprocess_input_file(input_filename, output_filename, column_info, length_u
                 if col_name in ['x', 'y', 'z', 'h']:
                     try:
                         quantity = values * u.Unit(info['unit'])
-                        values = quantity.to(length_unit).value
+                        values = quantity.to(LENGTH_UNIT).value
                     except Exception as e:
                         raise ValueError(f"Length unit conversion failed for {col_name}: {e}")
                         
                 elif col_name == 'age':
                     try:
                         quantity = values * u.Unit(info['unit'])
-                        values = quantity.to(age_unit).value
+                        values = quantity.to(AGE_UNIT).value
                     except Exception as e:
                         raise ValueError(f"Time unit conversion failed for age: {e}")
                         
@@ -318,8 +314,7 @@ def process_with_temp_files(input_filename, output_filename, column_info,
             num_original_particles = sum(1 for line in f if not line.startswith('#'))
         
         # Step 1: Preprocess
-        unused_columns = preprocess_input_file(input_filename, temp_file1, 
-                                             column_info, LENGTH_UNIT, AGE_UNIT)
+        unused_columns = preprocess_input_file(input_filename, temp_file1, column_info)
         
         # Step 2: Process with package - hardcoded units and parameters to avoid confusion
         process_simulation(
