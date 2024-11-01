@@ -20,19 +20,6 @@ def cleanup_temp_files(temp_files):
         except Exception as e:
             print(f"Warning: Could not remove temporary file {file}: {e}")
 
-def create_header_info(column_info):
-    """Create formatted header information based on column info dictionary"""
-    # Find the highest index to determine total number of columns
-    max_index = max(info['index'] for info in column_info.values())
-    headers = [""] * (max_index + 1)
-    
-    # Fill in header information for each column
-    for col_name, info in column_info.items():
-        unit_str = f" ({info.get('unit', '1')})" if 'unit' in info else " (1)"
-        headers[info['index']] = f"Column {info['index']+1}: {col_name}{unit_str}"
-    
-    return headers
-
 def preprocess_input_file(input_filename, output_filename, column_info):
     """
     Create an intermediate file with the required column structure for the package.
