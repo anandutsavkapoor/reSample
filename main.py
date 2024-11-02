@@ -259,10 +259,10 @@ def postprocess_output_file(input_filename, output_filename, unused_columns, col
             line = "  ".join(f"{val:.6e}" for val in row)
             f.write(line + "\n")
 
-def process_with_temp_files(input_filename, output_filename, column_info, 
+def convert_to_new_format(input_filename, output_filename, column_info, 
                           sfe_override=None, density_override=None):
     """
-    Complete processing workflow with temporary file handling.
+    Convert TODDLERS SED Family input file to TODDLERS Cloud SED Family input.
     
     Parameters
     ----------
@@ -271,7 +271,7 @@ def process_with_temp_files(input_filename, output_filename, column_info,
     output_filename : str
         Path for final output file
     column_info : dict
-        Dictionary specifying the column indices and units for required fields
+        Dictionary specifying the column indices and units for the fields in the input file
 
         It is advisable to use this template:
         Without velocity columns:
@@ -344,8 +344,8 @@ def process_with_temp_files(input_filename, output_filename, column_info,
 
 if __name__ == "__main__":
     # Examples (read the comments please)
-    #1 column information including velocity components, use this template
-    column_info = {
+    #1 column information in the input file which including velocity components, use this template
+    file_column_info = {
         'x': {'index': 0, 'unit': 'kpc'},
         'y': {'index': 1, 'unit': 'kpc'},
         'z': {'index': 2, 'unit': 'kpc'},
@@ -362,16 +362,16 @@ if __name__ == "__main__":
     }
     
     # Process the file with automatic temporary file handling
-    process_with_temp_files(
+    convert_to_new_format(
         input_filename="test_velo.dat",
         output_filename="test_velo_out.dat",
-        column_info=column_info,
+        column_info=file_column_info,
         sfe_override=0.05,
         density_override=160.,
     )
 
-    #2 column information without velocity components, use this template
-    column_info = {
+    #2 column information for a file without velocity components, use this template
+    file_column_info = {
         'x': {'index': 0, 'unit': 'kpc'},
         'y': {'index': 1, 'unit': 'kpc'},
         'z': {'index': 2, 'unit': 'kpc'},
@@ -384,10 +384,10 @@ if __name__ == "__main__":
     }
     
     # Process the file with automatic temporary file handling
-    process_with_temp_files(
+    convert_to_new_format(
         input_filename="test_no_velo.dat",
         output_filename="test_no_velo_out.dat",
-        column_info=column_info,
+        column_info=file_column_info,
         sfe_override=0.05,
         density_override=160.,
     )
