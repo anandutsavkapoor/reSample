@@ -132,7 +132,8 @@ def postprocess_output_file(input_filename, output_filename, unused_columns, col
     output_filename : str
         Path where the final output file will be saved
     unused_columns : dict
-        Dictionary of column indices and their corresponding data that wasn't used in processing
+        Dictionary of column indices and their corresponding data that wasn't used in
+        processing (velocity columns, for example)
     column_info : dict
         Original column information dictionary containing indices and units
     num_original_particles : int
@@ -308,6 +309,9 @@ def convert_to_new_format(input_filename, output_filename, column_info,
         Override star formation efficiency value to use another value
     density_override : float, optional
         Override density value to use another value
+
+    Note: The split components of each particle inherit the same velocity values as the parent particle.
+    Thus, there will be repeated entries in these columns in the output file.
     """
 
     # Generate unique temporary filenames
