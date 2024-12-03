@@ -75,26 +75,31 @@ class GalaxySimulation:
     def decompose_particles(self, r, smooth_age_scale):
         """Decompose all particles in the simulation
         r: spread decomposed particles in a sphere of this radius 
-        smooth_age_scale: add Gausian noise with this scale on top of the ages to smoothen them 
-        Both r and smooth_age_scale should be in the same units as the simulation, see main doc string
+        smooth_age_scale: add Gaussian noise with this scale on top of the ages to smoothen them 
+        Both r and smooth_age_scale should be in the same units as the simulation
         """
-
-        r  = self._convert_length(r, self.length_unit)
+        r = self._convert_length(r, self.length_unit)
         smooth_age_scale = self._convert_age(smooth_age_scale, self.age_unit)
 
         decomposed_particles = []
+        total_particles = len(self.particles)
 
-        total_particles = len(self.particles)  # Get the total number of particles
-        percent_step = total_particles / 100  # Calculate what 1% of the total is
+        # Calculate step size for progress reporting
+        # Use max(1, total_particles/100) to avoid division by zero
+        percent_step = max(1, total_particles / 100)
 
         for i, particle in enumerate(self.particles):
             mass_fractions = [self.relative_mass_fractions[mass_value] for mass_value in MASS_BIN_CENTERS]
             decomposed_particles.extend(particle.decompose(r, smooth_age_scale, mass_fractions))
             
-            # Check if the current index is at or past the next percentage point
-            if (i + 1) % int(percent_step) == 0 or i == total_particles - 1:
-                percent_complete = (i + 1) / total_particles * 100
-                print(f"Simulation particle decomposition into mass bins, progress: {percent_complete:.1f}% complete")
+            # Check if we should print progress
+            if total_particles < 100:  # For small numbers of particles
+                if (i + 1) == total_particles:  # Only print at the end
+                    print("Simulation particle decomposition into mass bins: 100% complete")
+            else:  # For larger numbers of particles
+                if (i + 1) % int(percent_step) == 0 or i == total_particles - 1:
+                    percent_complete = (i + 1) / total_particles * 100
+                    print(f"Simulation particle decomposition into mass bins, progress: {percent_complete:.1f}% complete")
 
         self.particles = decomposed_particles
 
