@@ -1,5 +1,5 @@
 import numpy as np
-from names_and_constants import MASS_BIN_CENTERS
+from names_and_constants import MASS_BIN_CENTERS, AGE_START, AGE_LIMIT
 
 class Particle:
     def __init__(self, x, y, z, h, age, metallicity, sfe, density, mass, cloud_mass=None, decomposed_mass=None):
@@ -33,7 +33,7 @@ class Particle:
     def _smooth_age(self, scale):
         """Smooth age using Gaussian function"""
         self.age += np.random.normal(0, scale)
-        return np.clip(self.age, 1e-2, 30)
+        return np.clip(self.age, AGE_START, AGE_LIMIT)
 
     def decompose(self, r, smooth_age_scale, mass_fractions):
         """Decompose the particle into components corresponding to specific mass bins"""

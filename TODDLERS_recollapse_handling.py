@@ -16,7 +16,6 @@ def find_closest_value(value, lst):
     """Find the closest value in lst to the given value."""
     return min(lst, key=lambda x: abs(x - value))
 
-
 class RecollapseData:
 
     """ Creates an hdf5 file containing recollapse times for the TODDLERS parameters and read it.
@@ -119,9 +118,9 @@ class StarFormationSimulation:
         self.recollapse_contributions_per_particle, self.recollapse_contributions_per_time_bin = self.calculate_recollapse_contribution() # main calculation
 
 
-    def generate_and_decompose_star_formation_data(self, r=0, smooth_age_scale=0):
+    def generate_and_decompose_star_formation_data(self, r=SPREAD_RADIUS, smooth_age_scale=SMOOTH_AGE_SCALE):
         """ This generates synthetic data if simulation data isnt avaialable or for testing"""
-        ages = np.random.uniform(0, AGE_LIMIT, self.num_particles)
+        ages = np.linspace(AGE_START, AGE_LIMIT, self.num_particles, endpoint=True) # uniform sampling by definition
         M_star_variation = 0. * M_STAR_MEAN
         M_star_particles = np.random.uniform(M_STAR_MEAN - M_star_variation, 
                                             M_STAR_MEAN + M_star_variation, self.num_particles)
@@ -164,9 +163,9 @@ class StarFormationSimulation:
 
 
     def calculate_recollapse_contribution(self):
-        Z_all           = [0.001, 0.004, 0.008, 0.02, 0.04]
-        epsilon_all     = [0.01, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15]
-        n_cl_all        = [10., 20., 40., 80., 160., 320., 640., 1280., 2560.]
+        Z_all           = METALLICITIES 
+        epsilon_all     = STAR_FORMATION_EFFICIENCIES 
+        n_cl_all        = CLOUD_DENSITIES
         recollapse_contributions_per_particle = np.zeros_like(self.M_star_particles)
         recollapse_contributions_per_bin = np.zeros(N_TEMPORAL_BINS)
         
@@ -199,7 +198,7 @@ class StarFormationSimulation:
                     for time in recollapse_times[1:]: # The first element is 0 Myr
                         n = n_gen - 1
                         subsequent_bin_idx = np.digitize(self.leftover_time[idx] + time, np.linspace(0, AGE_LIMIT, N_TEMPORAL_BINS)) # bin_idx where recollapse contributes
-                        if self.leftover_time[idx] + time < AGE_LIMIT:
+                        if self.leftover_time[idx] + time < AGE_LIMIT: 
                             contribution =  ((1 - self.epsilon[idx])**n) * self.w_ki[idx] * self.epsilon[idx] * self.M_cloud_particles[idx] 
                             recollapse_contributions_per_particle[idx] += contribution
                             recollapse_contributions_per_bin[subsequent_bin_idx] += contribution
