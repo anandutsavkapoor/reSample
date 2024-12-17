@@ -16,9 +16,14 @@ class SEDGenerator:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
             
+        # Determine resolution from output directory
+        is_hr = 'hr' in str(output_dir)
+        
         # Memory-based worker calculation
+        # Use 40GB for high resolution, 19GB for low resolution
+        base_memory = 35e9 if is_hr else 19e9
+        memory_per_process = base_memory * (SAMPLE_SIZE_TIME / 1000)  # Estimate per process
         available_memory = psutil.virtual_memory().available
-        memory_per_process = 40e9 * (SAMPLE_SIZE_TIME / 1000) # Estimate per process
         suggested_workers = max(1, int(available_memory / memory_per_process))
         self.max_workers = min(suggested_workers, os.cpu_count()) if max_workers is None else max_workers
         
@@ -89,7 +94,7 @@ class SEDGenerator:
 
             # Save wavelength grid and SED values
             save_data = np.column_stack((manip.wavelength_grid.value, sed_per_sfr.value))
-            np.savetxt(output_file, save_data, fmt='%.8e', 
+            np.savetxt(output_file, save_data, fmt='%.18e', 
                       header='Wavelength[m] SED_per_SFR[W/m/Msun/yr]')
 
             self.logger.info(f"Successfully generated SED for Z={Z}, eta={eta}, n_cl={n_cl}")
