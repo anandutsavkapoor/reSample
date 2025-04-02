@@ -1,4 +1,4 @@
-# SKIRT 9 import format for SFR with TODDLERS model
+# SKIRT 9 import format for TODDLERS SED Family in Cloud mode without velocity columns
 # Column 1: x-coordinate (kpc)
 # Column 2: y-coordinate (kpc)
 # Column 3: z-coordinate (kpc)

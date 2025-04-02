@@ -55,6 +55,7 @@ column_info = {
     'mass': {'index': 8, 'unit': 'Msun'}
 }
 ```
+The test*.dat files included in the repository provide concrete examples of input/output.
 
 ## Important Notes
 - **Units for length (`x`, `y`, `z`, `h`)** - will be converted to kpc internally

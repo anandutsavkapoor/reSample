@@ -1,4 +1,4 @@
-# Stellar particles for TNG50-1 snapshot=92 subhaloID=590664
+# The following columns serve as an input for the reSampling routine with velocity columns
 # Column 1: x-coordinate (kpc)
 # Column 2: y-coordinate (kpc)
 # Column 3: z-coordinate (kpc)
