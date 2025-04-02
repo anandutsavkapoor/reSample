@@ -158,8 +158,8 @@ def process_simulation(input_filename, input_length_unit, input_age_unit, output
     M_tot_bin = adjusted_M_star_particles_per_bin + TORCHsim.recollapse_contributions_per_time_bin
 
  
-    if not os.path.exists("figures"):
-        os.makedirs("figures")
+    if not os.path.exists("recollapse_figures"):
+        os.makedirs("recollapse_figures")
     
     warnings.simplefilter("ignore", category=RuntimeWarning)
     plt.figure(figsize=(5, 5))
@@ -171,7 +171,7 @@ def process_simulation(input_filename, input_length_unit, input_age_unit, output
     plt.ylabel("contributions")
     plt.legend()
     plt.tight_layout()
-    save_figname = f"figures/adjusted_distribs_{os.path.basename(input_filename)}_sfe_{sfe_override}_density_{density_override}.pdf"
+    save_figname = f"recollapse_figures/adjusted_distribs_{os.path.basename(input_filename)}_sfe_{sfe_override}_density_{density_override}.pdf"
     plt.savefig(save_figname)
     # Save the updated simulation data
     sim.save_to_file(output_filename, cloud_mass, weight)
