@@ -9,9 +9,9 @@ This tool allows galaxy simulation particles to be properly processed for use wi
 - Produces an output file that properly weights SEDs to maintain the galaxy's star formation rate
 
 ## Usage
-The `main.py` script provides an easy way to convert simulation input files to TODDLERS SED Family (Cloud mode) format. Here's an example:
-Please ensure that the AGE_LIMIT in `names_and_constants.py` is consistent with the cutoff age of the particles in the input file.
-The stellar template needs to be adjusted in  `names_and_constants.py` through STELLAR_TEMPLATE, IMF_TYPE, and STAR_TYPE parameters.
+- Please ensure that the AGE_LIMIT in `names_and_constants.py` is consistent with the cutoff age of the particles in the input file.
+- The stellar template needs to be adjusted in  `names_and_constants.py` through STELLAR_TEMPLATE, IMF_TYPE, and STAR_TYPE parameters.
+- The `main.py` script provides an easy way to convert simulation input files to TODDLERS SED Family (Cloud mode) format. Here's an example:
 
 ```python
 from main import convert_to_new_format
