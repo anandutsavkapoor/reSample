@@ -160,7 +160,7 @@ class StarFormationSimulation:
     main output : weights associated with each particle with a consideration to recollapsed mass
     This weight value (w_ki) is initalized and modified in the function calculate_recollapse_contribution of this class
     """
-    def __init__(self, Z, epsilon, n_cl, simulation_data=None, num_particles=2000, version='v1'):
+    def __init__(self, Z, epsilon, n_cl, simulation_data=None, num_particles=2000, version=RECOLLAPSE_HDF5_VER):
         """num_particles is prior to decomposition, only applicable when simulation_data isnt provided"""
         self.data_obj = RecollapseData()
         self.simulation_data = simulation_data

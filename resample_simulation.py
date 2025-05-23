@@ -115,7 +115,6 @@ class GalaxySimulation:
     def save_to_file(self, filename, cloud_mass, weight):
         with open(filename, 'w') as f:
                 # Write headers
-                f.write("# SKIRT 9 import format for SFR with TODDLERS model#\n")
                 f.write("# Column 1: x-coordinate (kpc)\n")
                 f.write("# Column 2: y-coordinate (kpc)\n")
                 f.write("# Column 3: z-coordinate (kpc)\n")

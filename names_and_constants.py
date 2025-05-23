@@ -2,9 +2,9 @@ import numpy as np
 import os
 
 # Stellar population parameters
-STELLAR_TEMPLATE = "SB99"     # Alternative: "BPASS"
-IMF_TYPE = "kroupa100"        # Alternative: "chab100" 
-STAR_TYPE = "sin"            # Alternative: "bin"
+STELLAR_TEMPLATE = "BPASS"     # Options: "SB99, SB99"
+IMF_TYPE = "chab100"        # Options: "chab100, chab300 (BPASS), kroupa100 (SB99)" 
+STAR_TYPE = "bin"            # Options: "bin (BPASS), sin (SB99)"
 
 # Create consistent model identifier
 MODEL_PREFIX = f"{STELLAR_TEMPLATE}_{IMF_TYPE}_{STAR_TYPE}"
@@ -14,9 +14,9 @@ print(f'recollapse_data_{MODEL_PREFIX}.hdf5') # recollapse_data_BPASS_chab100_bi
 HDF5_FILENAME = f'hdf5/recollapse_data_{MODEL_PREFIX}.hdf5'
 
 # Constants
-AGE_LIMIT = 10.1             # Myr
+AGE_LIMIT = 30.1             # Myr
 AGE_START = 0.1              # Myr
-N_TEMPORAL_BINS = 5
+N_TEMPORAL_BINS = 15
 M_STAR_MEAN = 10000        # Solar masses
 SAMPLE_SIZE = 10**6        # For cloud mass distribution
 EXPONENT = -1.8            # Cloud mass function slope

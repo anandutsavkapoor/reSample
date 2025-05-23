@@ -370,8 +370,8 @@ if __name__ == "__main__":
         input_filename="test_velo.dat",
         output_filename="test_velo_out.dat",
         column_info=file_column_info,
-        sfe_override=0.05,
-        density_override=160.,
+        sfe_override=0.025,
+        density_override=320.,
     )
 
     #2 column information for a file without velocity components, use this template
@@ -392,6 +392,6 @@ if __name__ == "__main__":
         input_filename="test_no_velo.dat",
         output_filename="test_no_velo_out.dat",
         column_info=file_column_info,
-        sfe_override=0.05,
-        density_override=160.,
+        sfe_override=0.025,
+        density_override=320.,
     )
